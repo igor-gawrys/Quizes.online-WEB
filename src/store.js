@@ -12,19 +12,24 @@ const actions = {
     login({commit},credientials){
         Axios.post('auth/login',credientials).then((response)=>{
             localStorage.setItem("access_token",response.data.data.access_token);
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
             Axios.post('auth/me').then((response)=>{
                 state.user = response.data.data;
                 Axios.get('auth/quizes').then((response)=>{
                    state.quizes = response.data.data.quizes;
+                   router.push({name:"Dashboard",params:{}});
                 });
             });
-            router.push({name:"Dashboard",params:{}});
           });
     },
     me({commit}){
         if(state.logged){
         Axios.post('auth/me').then((response)=>{
          state.user = response.data.data;
+        }).catch((err) => {
+            state.logged = false;
+            localStorage.removeItem('access_token');
+            router.push({name:"Login",params:{}});
         });
         }
     },

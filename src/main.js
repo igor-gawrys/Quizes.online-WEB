@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import BootstrapVue from 'bootstrap-vue'
+import VueSocketIO from 'vue-socket.io'
 import draggable from 'vuedraggable'
 import Loading from 'vue-loading-overlay';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -17,6 +18,15 @@ if(localStorage.getItem("access_token",null) !=null){
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
 }
 Vue.use(BootstrapVue)
+Vue.use(new VueSocketIO({
+  debug: false,
+  connection: 'http://localhost:3000',
+  vuex: {
+      store,
+      actionPrefix: 'SOCKET_',
+      mutationPrefix: 'SOCKET_'
+  }
+}))
 Vue.use(draggable)
 Vue.use(Loading,{
   height:128,

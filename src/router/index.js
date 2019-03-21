@@ -6,6 +6,7 @@ import Login from '@/components/Auth/Login'
 import Quiz from '@/components/Quiz'
 import Question from '@/components/Question'
 import QuizShow from '@/components/QuizShow'
+import Join from '@/components/Join'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/quiz/:quiz/show',
       name: 'QuizShow',
       component: QuizShow
+    },
+    {
+      path: '/join',
+      name: 'Join',
+      component: Join
     }
   ]
 })
